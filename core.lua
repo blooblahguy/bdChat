@@ -25,9 +25,10 @@ defaults[#defaults+1] = {hideincombat = {
 }}
 
 bdCore:addModule("Chat",defaults)
+local config = bdCore.config.profile['Chat']
+
 local bdChat = CreateFrame("frame",nil,UIParent)
 RegisterAddonMessagePrefix("bdChat")
-local config = bdCore.config.Chat
 local justreturn = false
 local gsub = string.gsub
 local update = 0
@@ -147,6 +148,7 @@ bdBG:SetBackdropBorderColor(unpack(bdCore.media.border))
 bdBG:SetAlpha(config.bgalpha)
 
 function configCallback()
+	config = bdCore.config.profile['Chat']
 	bdBG:SetAlpha(config.bgalpha)
 end
 
