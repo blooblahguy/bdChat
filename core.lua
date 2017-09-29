@@ -24,6 +24,8 @@ defaults[#defaults+1] = {hideincombat = {
 	label="Hide all chat frames in boss combat."
 }}
 
+
+
 bdCore:addModule("Chat",defaults)
 local config = bdCore.config.profile['Chat']
 
