@@ -64,7 +64,16 @@ local function alertMessage(message)
 	bdChat.alert:SetAlpha(1);
 	bdChat.alert:Show();
 	bdChat.alert.time = GetTime();
-	PlaySound("TellMessage","master")
+	--PlaySound("TellMessage","master")
+end
+
+-- tt functionality, thanks phanx for simple script
+SLASH_TELLTARGET1 = "/tt"
+SLASH_TELLTARGET2 = "/wt"
+SlashCmdList.TELLTARGET = function(message)
+	if UnitIsPlayer("target") and (UnitIsUnit("player", "target") or UnitCanCooperate("player", "target")) then
+		SendChatMessage(message, "WHISPER", nil, GetUnitName("target", true))
+	end
 end
 
 --editbox font
