@@ -247,6 +247,11 @@ local function skinChat(frame)
 	end
 	editbox:SetPoint("LEFT",frame,-8,0)
 	editbox:SetPoint("RIGHT",frame,8,0)
+
+	hooksecurefunc(editbox, "SetAlpha", function()
+		
+		--print("here we are")
+	end)
 end
 
 local function RGBPercToHex(r, g, b)
