@@ -30,7 +30,7 @@ bdCore:addModule("Chat",defaults)
 local config = bdCore.config.profile['Chat']
 
 local bdChat = CreateFrame("frame",nil,UIParent)
-RegisterAddonMessagePrefix("bdChat")
+C_ChatInfo.RegisterAddonMessagePrefix("bdChat")
 local justreturn = false
 local gsub = string.gsub
 local update = 0
@@ -64,7 +64,7 @@ local function alertMessage(message)
 	bdChat.alert:SetAlpha(1);
 	bdChat.alert:Show();
 	bdChat.alert.time = GetTime();
-	--PlaySound("TellMessage","master")
+	PlaySound(3081,"master")
 end
 
 -- tt functionality, thanks phanx for simple script
@@ -298,13 +298,13 @@ local function AddMessage(self, text, ...)
 	local everyonecallout = text:lower():find("@everyone")
 	if (everyonecallout) then
 		if (text:find("GUILD")) then
-			SendAddonMessage("bdChat",text,"GUILD")
+			C_ChatInfo.SendAddonMessage("bdChat",text,"GUILD")
 		elseif (text:find("RAID")) then
-			SendAddonMessage("bdChat",text,"RAID")
+			C_ChatInfo.SendAddonMessage("bdChat",text,"RAID")
 		elseif (text:find("OFFICER")) then
-			SendAddonMessage("bdChat",text,"OFFICER")
+			C_ChatInfo.SendAddonMessage("bdChat",text,"OFFICER")
 		elseif (text:find("PARTY")) then
-			SendAddonMessage("bdChat",text,"PARTY")
+			C_ChatInfo.SendAddonMessage("bdChat",text,"PARTY")
 		end
 	end
 	
@@ -520,6 +520,7 @@ local function ischatbubble(frame)
 	if frame:IsForbidden() then return end
 	if frame:GetName() then return end
 	if not frame:GetRegions() then return end
+	if not frame:GetRegions().GetTexture then return end
 	return frame:GetRegions():GetTexture() == "Interface\\Tooltips\\ChatBubble-Background"
 end
 bdChat:SetScript("OnUpdate", function(self, elapsed)
