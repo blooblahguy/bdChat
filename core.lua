@@ -173,11 +173,13 @@ end
 
 local function skinChat(frame)
 	if not frame then return end
+
 	local fontSize = 14
 	local name = frame:GetName()
 	local editbox = _G[name..'EditBox']
 	local bg = _G[name..'Background']
 	local buttonframe = _G[name..'ButtonFrame']
+	local thumb = _G[name..'ThumbTexture']
 	local resize = _G[name..'ResizeButton']
 	local tex = {editbox:GetRegions()}
 	local tab = _G[name..'Tab']
@@ -196,6 +198,9 @@ local function skinChat(frame)
 	resize:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 9,-5)
 	resize:SetScale(.4)
 	resize:SetAlpha(0.7)
+
+	-- to do: find out how best to display chat actionables, instead of just hiding them all
+	thumb:Hide()
 	
 	-- kill textures
 	for g = 1, #CHAT_FRAME_TEXTURES do
