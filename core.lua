@@ -471,6 +471,16 @@ local function skinChat(self)
 end
 
 -- Skin Chat Bubbles
+--local rawtextbox = CreateFrame("EditBox",nil,UIParent)
+-- --rawtextbox:SetAutoFocus(false)
+-- local function rawText(text)
+	-- -- starting from the beginning, replace item and spell links with just their names
+	-- text = gsub(text, "|r|h:(.+)|cff(.+)|H(.+)|h%[(.+)%]|h|r", "|r|h:%1%4");
+	-- text = strtrim(text)
+	-- --text = gsub(text, "\124", "\124\124"); -- if we ever need to see the raw itemlinks
+	-- return text
+-- end
+
 local function skinbubble(frame)
 	for i=1, frame:GetNumRegions() do
 		local region = select(i, frame:GetRegions())
