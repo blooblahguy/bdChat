@@ -18,6 +18,12 @@ defaults[#defaults+1] = {bgalpha = {
 	label="Chat background opacity."
 }}
 
+defaults[#defaults+1] = {chatHide = {
+	type="checkbox",
+	value=false,
+	label="Hide communities chat under a click frame, useful for streamers."
+}}
+
 defaults[#defaults+1] = {hideincombat = {
 	type="checkbox",
 	value=false,
@@ -139,12 +145,69 @@ ToggleChatColorNamesByClassGroup(true, "CHANNEL5")
 ToggleChatColorNamesByClassGroup(true, "INSTANCE_CHAT")
 ToggleChatColorNamesByClassGroup(true, "INSTANCE_CHAT_LEADER")
 
+
+--------------------------------------------------
+-- Hide communities chat by default
+--------------------------------------------------
+-- Credit to Nnogga
+local commOpen = CreateFrame("frame", nil, UIParent)
+commOpen:RegisterEvent("ADDON_LOADED")
+commOpen:RegisterEvent("CHANNEL_UI_UPDATE")
+commOpen:SetScript("OnEvent", function(self, event, addonName)    
+    if event == "ADDON_LOADED" and addonName == "Blizzard_Communities" then
+        --create overlay
+        local f = CreateFrame("Button",nil,UIParent)
+        f:SetFrameStrata("HIGH")
+        f.tex = f:CreateTexture(nil, "BACKGROUND")
+        f.tex:SetAllPoints()
+        f.tex:SetColorTexture(0.1,0.1,0.1,1)
+        f.text = f:CreateFontString()
+        f.text:SetFontObject("GameFontNormalMed3")
+        f.text:SetText("Chat Hidden. Click to show")
+        f.text:SetTextColor(1, 1, 1, 1)
+        f.text:SetJustifyH("CENTER")
+        f.text:SetJustifyV("CENTER")
+        f.text:SetHeight(20)
+        f.text:SetPoint("CENTER",f,"CENTER",0,0)
+        f:EnableMouse(true)
+        f:RegisterForClicks("AnyUp")
+        f:SetScript("OnClick",function(...)
+        	f:Hide()
+        end)
+        --toggle
+        local function toggleOverlay()       
+            if CommunitiesFrame:GetDisplayMode() == COMMUNITIES_FRAME_DISPLAY_MODES.CHAT and config.chatHide then
+                f:SetAllPoints(CommunitiesFrame.Chat.InsetFrame)
+                f:Show()
+            else
+                f:Hide()
+            end
+        end
+        local function hideOverlay()
+            f:Hide()  
+        end        
+        toggleOverlay() --run once
+        
+        --hook        
+        hooksecurefunc(CommunitiesFrame,"SetDisplayMode", toggleOverlay)
+        hooksecurefunc(CommunitiesFrame,"Show",toggleOverlay)
+        hooksecurefunc(CommunitiesFrame,"Hide",hideOverlay)
+        hooksecurefunc(CommunitiesFrame,"OnClubSelected", toggleOverlay)        
+    end
+end)
+
+-- Hide side buttons
 ChatFrameMenuButton:Hide()
 ChatFrameMenuButton.Show = noop
 QuickJoinToastButton:Hide()
 QuickJoinToastButton.Show = noop
+ChatFrameChannelButton:Hide()
+ChatFrameChannelButton.Show = noop
+
 BNToastFrame:SetClampedToScreen(true)
 BNToastFrame:SetClampRectInsets(-15,15,15,-15)
+
+
 GeneralDockManager:SetFrameStrata("HIGH")
 local point, anchor, apoint, x, y = GeneralDockManager:GetPoint()
 GeneralDockManager:SetPoint(point, anchor, apoint, 0, 16)
@@ -253,10 +316,6 @@ local function skinChat(frame)
 	editbox:SetPoint("LEFT",frame,-8,0)
 	editbox:SetPoint("RIGHT",frame,8,0)
 
-	hooksecurefunc(editbox, "SetAlpha", function()
-		
-		--print("here we are")
-	end)
 end
 
 local function RGBPercToHex(r, g, b)

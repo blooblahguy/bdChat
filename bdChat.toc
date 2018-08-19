@@ -5,4 +5,7 @@
 ## LoadOnDemand: 0
 ## Dependencies: bdCore
 
+init.lua
+functions.lua
 core.lua
+bubbles.lua
