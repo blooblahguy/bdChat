@@ -30,10 +30,10 @@ defaults[#defaults+1] = {hideincombat = {
 	label="Hide all chat frames in boss combat."
 }}
 
-
-
-bdCore:addModule("Chat",defaults)
-local config = bdCore.config.profile['Chat']
+bdConfigLib:RegisterModule({
+	name = "Chat"
+}, defaults, BD_persistent)
+local config = bdConfigLib.profile['Chat']
 
 local bdChat = CreateFrame("frame",nil,UIParent)
 C_ChatInfo.RegisterAddonMessagePrefix("bdChat")
