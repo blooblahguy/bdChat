@@ -33,7 +33,7 @@ defaults[#defaults+1] = {hideincombat = {
 bdConfigLib:RegisterModule({
 	name = "Chat"
 }, defaults, BD_persistent)
-local config = bdConfigLib.profile['Chat']
+local config = bdConfigLib:GetSave('Chat')
 
 local bdChat = CreateFrame("frame",nil,UIParent)
 C_ChatInfo.RegisterAddonMessagePrefix("bdChat")
