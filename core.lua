@@ -9,11 +9,11 @@ defaults[#defaults+1] = {skinchatbubbles = {
 	callback=function() bdCore:triggerEvent("bdChat_bubble_updated") end
 }}
 defaults[#defaults+1] = {bgalpha = {
-	type="slider",
-	value=1,
-	step=0.1,
-	min=0,
-	max=1,
+	type = "slider",
+	value = 1,
+	step = 0.1,
+	min = 0,
+	max = 1,
 	callback = function() configCallback() end,
 	label="Chat background opacity."
 }}
@@ -32,7 +32,7 @@ defaults[#defaults+1] = {hideincombat = {
 
 local config = bdConfigLib:RegisterModule({
 	name = "Chat"
-}, defaults, BD_persistent)
+}, defaults, "BD_persistent")
 
 local bdChat = CreateFrame("frame",nil,UIParent)
 C_ChatInfo.RegisterAddonMessagePrefix("bdChat")
@@ -221,7 +221,6 @@ bdBG:SetBackdropBorderColor(unpack(bdCore.media.border))
 bdBG:SetAlpha(config.bgalpha)
 
 function configCallback()
-	config = bdCore.config.profile['Chat']
 	bdBG:SetAlpha(config.bgalpha)
 end
 
