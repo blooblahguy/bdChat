@@ -21,7 +21,7 @@ defaults[#defaults+1] = {bgalpha = {
 defaults[#defaults+1] = {chatHide = {
 	type="checkbox",
 	value=false,
-	label="Hide communities chat under a click frame, useful for streamers."
+	label="Hide communities chat until focus, for streamers."
 }}
 
 defaults[#defaults+1] = {hideincombat = {
@@ -211,17 +211,26 @@ GeneralDockManager:SetFrameStrata("HIGH")
 local point, anchor, apoint, x, y = GeneralDockManager:GetPoint()
 GeneralDockManager:SetPoint(point, anchor, apoint, 0, 16)
 
-local bdBG = CreateFrame("frame",nil,UIParent)
-bdBG:SetPoint("TOPLEFT", ChatFrame1, "TOPLEFT", -10, 10)
-bdBG:SetPoint("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 10, -10)
-bdBG:SetBackdrop({bgFile = bdCore.media.flat, edgeFile = bdCore.media.flat, edgeSize = 2, insets = {left = 2, right = 2, bottom = 2, top = 2} })
-bdBG:SetBackdropColor(unpack(bdCore.media.backdrop))
-bdBG:SetFrameStrata("BACKGROUND")
-bdBG:SetBackdropBorderColor(unpack(bdCore.media.border))
-bdBG:SetAlpha(config.bgalpha)
+-- local bdBG = CreateFrame("frame",nil,UIParent)
+-- bdBG:SetPoint("TOPLEFT", ChatFrame1, "TOPLEFT", -10, 10)
+-- bdBG:SetPoint("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 10, -10)
+-- bdBG:SetBackdrop({bgFile = bdCore.media.flat, edgeFile = bdCore.media.flat, edgeSize = 2, insets = {left = 2, right = 2, bottom = 2, top = 2} })
+-- bdBG:SetBackdropColor(unpack(bdCore.media.backdrop))
+-- bdBG:SetFrameStrata("BACKGROUND")
+-- bdBG:SetBackdropBorderColor(unpack(bdCore.media.border))
+-- bdBG:SetAlpha(config.bgalpha)
+bdCore:setBackdrop(ChatFrame1, false)
+ChatFrame1.background:ClearAllPoints()
+ChatFrame1.border:ClearAllPoints()
+
+ChatFrame1.background:SetPoint("TOPLEFT", ChatFrame1, "TOPLEFT", -10, 10)
+ChatFrame1.background:SetPoint("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 10, -10)
+ChatFrame1.border:SetPoint("TOPLEFT", ChatFrame1, "TOPLEFT", -12, 12)
+ChatFrame1.border:SetPoint("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 12, -12)
 
 function configCallback()
-	bdBG:SetAlpha(config.bgalpha)
+	ChatFrame1.background:SetAlpha(config.bgalpha)
+	ChatFrame1.border:SetAlpha(config.bgalpha)
 end
 
 local function rawText(text)
