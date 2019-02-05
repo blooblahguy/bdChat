@@ -225,6 +225,7 @@ function configCallback()
 	ChatFrame1.background:SetAlpha(config.bgalpha)
 	ChatFrame1.border:SetAlpha(config.bgalpha)
 end
+configCallback()
 
 local function rawText(text)
 	-- starting from the beginning, replace item and spell links with just their names
